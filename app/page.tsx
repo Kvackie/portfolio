@@ -2,15 +2,13 @@ import AsciiMonogram from "@/components/ascii-monogram";
 import {
   ArrowRightIcon,
   ArrowUpIcon,
-  ArrowUpRightIcon,
   GitHubIcon,
   LinkedInIcon,
   MailIcon,
-  PlayIcon,
 } from "@/components/icons";
-import { FeaturedCard, ProjectCard } from "@/components/project-card";
+import { ProjectCard } from "@/components/project-card";
 import Wordmark from "@/components/wordmark";
-import { FEATURED, LINKS, REST, SKILL_GROUPS, STATS } from "@/data/projects";
+import { LINKS, PROJECTS, SKILL_GROUPS, STATS } from "@/data/projects";
 
 const NAV = [
   { href: "#work", label: "Projects" },
@@ -158,17 +156,6 @@ export default function Home() {
                   Browse the projects
                   <ArrowRightIcon className="h-3.5 w-3.5" />
                 </a>
-                {FEATURED.play && (
-                  <a
-                    href={FEATURED.play}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 font-mono text-xs font-semibold tracking-wide text-ink transition-colors hover:border-accent/50 hover:text-accent"
-                  >
-                    <PlayIcon className="h-3.5 w-3.5" />
-                    Play Trial and Error
-                  </a>
-                )}
               </div>
 
               <div className="mt-7 flex flex-wrap gap-2">
@@ -229,10 +216,8 @@ export default function Home() {
             lede="Most of them are games, built to be finished enough to play. The pattern is the same in all of them: TypeScript, a real test suite, art and sound made in code wherever possible, and a build small enough to deploy as static files."
           />
 
-          <FeaturedCard project={FEATURED} />
-
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            {REST.map((project) => (
+          <div className="grid gap-6 sm:grid-cols-2">
+            {PROJECTS.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>

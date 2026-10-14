@@ -1,11 +1,6 @@
 import type { Project } from "@/data/projects";
 import { asset } from "@/lib/site";
-import {
-  ArrowUpRightIcon,
-  CoffeeIcon,
-  LockIcon,
-  PlayIcon,
-} from "./icons";
+import { ArrowUpRightIcon, CoffeeIcon, LockIcon } from "./icons";
 
 function TechPills({ tech }: { tech: string[] }) {
   return (
@@ -64,71 +59,6 @@ function ProjectImage({ project }: { project: Project }) {
       loading="lazy"
       decoding="async"
     />
-  );
-}
-
-/** The large card above the grid. */
-export function FeaturedCard({ project }: { project: Project }) {
-  return (
-    <article className="group overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition-shadow hover:shadow-md">
-      <div className="grid gap-0 md:grid-cols-2">
-        <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface-2 md:aspect-auto md:border-b-0 md:border-r">
-          <ProjectImage project={project} />
-        </div>
-
-        <div className="flex flex-col justify-center p-6 sm:p-8">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-            Featured
-          </p>
-          <h3 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            {project.title}
-          </h3>
-          <p className="mt-1 font-mono text-sm text-muted">{project.tagline}</p>
-
-          <p className="mt-4 text-[15px] leading-relaxed text-muted">
-            {project.description}
-          </p>
-
-          {project.details && (
-            <ul className="mt-4 space-y-2">
-              {project.details.map((d) => (
-                <li key={d} className="flex gap-2.5 text-sm text-muted">
-                  <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
-                  <span>{d}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <TechPills tech={project.tech} />
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            {project.play && (
-              <a
-                href={project.play}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 font-mono text-xs font-semibold tracking-wide text-accent-ink transition-colors hover:bg-accent-hover"
-              >
-                <PlayIcon className="h-3.5 w-3.5" />
-                Play in browser
-              </a>
-            )}
-            {project.repo && (
-              <a
-                href={project.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 font-mono text-xs font-semibold tracking-wide text-ink transition-colors hover:border-accent/50 hover:text-accent"
-              >
-                Source
-                <ArrowUpRightIcon className="h-3.5 w-3.5" />
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </article>
   );
 }
 

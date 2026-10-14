@@ -27,10 +27,7 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kvackie.github.io/portfolio"),
-  title: {
-    default: `${LINKS.name} — ${LINKS.headline}`,
-    template: `%s — ${LINKS.name}`,
-  },
+  title: LINKS.headline,
   description: DESCRIPTION,
   authors: [{ name: LINKS.name }],
   creator: LINKS.name,
@@ -48,13 +45,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/portfolio",
-    title: `${LINKS.name} — ${LINKS.headline}`,
+    title: LINKS.headline,
     description: DESCRIPTION,
     siteName: LINKS.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${LINKS.name} — ${LINKS.headline}`,
+    title: LINKS.headline,
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true },

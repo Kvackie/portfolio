@@ -33,7 +33,7 @@ export default function AsciiMonogram() {
       </div>
 
       <pre
-        aria-label="Valentin Wannesian, initials V W"
+        aria-label="Monogram: V W"
         className="relative overflow-x-auto font-mono text-[13px] leading-[1.45] font-bold text-accent [text-shadow:0_0_18px_color-mix(in_srgb,var(--accent)_45%,transparent)] sm:text-[15px]"
       >
         {VW.join("\n")}

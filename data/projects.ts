@@ -12,8 +12,6 @@ export type Project = {
   tagline: string;
   /** One or two sentences on what it actually is. */
   description: string;
-  /** Extra detail, used on the featured card. */
-  details?: string[];
   /** Path under /public. Omit for projects with no public demo. */
   image?: string;
   imageAlt?: string;
@@ -25,7 +23,6 @@ export type Project = {
   tech: string[];
   /** Rendered as a badge; also suppresses the link. */
   status?: "private" | "in-progress";
-  featured?: boolean;
 };
 
 export const PROJECTS: Project[] = [
@@ -34,20 +31,13 @@ export const PROJECTS: Project[] = [
     title: "Trial and Error",
     tagline: "Five small mobile games, each built and shipped on its own.",
     description:
-      "A collection of five complete games in one repository: a falling-blocks puzzle, a potion match-three, a lantern-lit maze, a 3D hex town builder and a semi-idle dungeon defence. Every one has its own build and its own address, and all of them are mobile first -- designed for a phone held upright and played with thumbs.",
-    details: [
-      "Mobile first, desktop second, across every game in the repo.",
-      "Playable in the browser, installable as an Android app via Capacitor.",
-      "Phaser for the 2D games, Three.js for the 3D ones, TypeScript throughout.",
-      "Progress keeps ticking for up to eight hours while the app is closed.",
-    ],
+      "A collection of five complete games in one repository: a falling-blocks puzzle, a potion match-three, a lantern-lit maze, a 3D hex town builder and a semi-idle dungeon defence. Every one has its own build and its own address, and all of them are mobile first -- designed for a phone held upright and played with thumbs. Progress keeps ticking for up to eight hours while the app is closed.",
     image: "/img/trial-and-error.webp",
     imageAlt:
       "The Trial and Error hub, listing Block Drop, Hex Hold, Lantern Maze, Potion Match and Throne of Souls with an icon for each.",
     repo: "https://github.com/Kvackie/Trial-and-error",
     play: "https://kvackie.github.io/Trial-and-error/",
     tech: ["TypeScript", "Phaser", "Three.js", "Capacitor", "Vite"],
-    featured: true,
   },
   {
     slug: "eternal-alchemy",
@@ -107,9 +97,6 @@ export const PROJECTS: Project[] = [
     status: "private",
   },
 ];
-
-export const FEATURED = PROJECTS.find((p) => p.featured) ?? PROJECTS[0];
-export const REST = PROJECTS.filter((p) => !p.featured);
 
 /** Skills are grouped by what they are for, not alphabetically. */
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
