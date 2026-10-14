@@ -1,7 +1,6 @@
 # Valentin Wannesian
 
-Software engineer based in Sweden. I make games in my spare time, and this repo
-is the site that collects them.
+Software engineer based in Sweden.
 
 **Live site → [kvackie.github.io/portfolio](https://kvackie.github.io/portfolio/)**
 
@@ -16,9 +15,7 @@ is the site that collects them.
 
 ## This repo
 
-Just the site. Next.js, prerendered to static files and published to GitHub
-Pages by GitHub Actions. No server, no database, nothing to install — it is
-just HTML and a little CSS. The deploy only runs when I trigger it from the
-Actions tab, so copy tweaks don't push a needless build.
+Next.js, prerendered to static files and published to GitHub
+Pages by GitHub Actions.
 
 Layout inspired by [matthiasholmberg.github.io/portfolio](https://matthiasholmberg.github.io/portfolio/).
