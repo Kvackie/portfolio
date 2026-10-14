@@ -6,12 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * Hue wheel for trying out colour schemes.
  *
  * Only the hue is picked; every other value in the palette is derived from it,
- * so the whole page stays coherent no matter where you drag. The variables it
- * writes are the same ones declared in globals.css, set as inline styles on
- * <html> so they win over the stylesheet.
- *
- * Written straight to CSS custom properties rather than through React state
- * because the site has no other runtime styling layer to thread through.
+ * so the page stays coherent wherever you drag. The variables written here are
+ * the same ones declared in globals.css, set inline on <html> so they win over
+ * the stylesheet.
  */
 
 const STORAGE_KEY = "portfolio-hue";
@@ -19,15 +16,26 @@ const STORAGE_KEY = "portfolio-hue";
 /** Hue of the default warm orange (#e8873a) the palette ships with. */
 const DEFAULT_HUE = 27;
 
+/**
+ * Perceived brightness is not flat across the wheel: yellow at the same HSL
+ * lightness reads much brighter than blue, so a fixed value makes yellows
+ * washed out and blues murky. This nudges lightness to compensate, which keeps
+ * every hue landing at roughly the same contrast against the dark background.
+ */
+function lightness(hue: number) {
+  return 58 - Math.cos(((hue - DEFAULT_HUE) * Math.PI) / 180) * 7;
+}
+
 function palette(hue: number) {
+  const l = lightness(hue);
   return {
-    "--accent": `hsl(${hue} 62% 58%)`,
-    "--accent-hover": `hsl(${hue} 68% 66%)`,
+    "--accent": `hsl(${hue} 62% ${l}%)`,
+    "--accent-hover": `hsl(${hue} 68% ${l + 8}%)`,
     "--accent-ink": `hsl(${hue} 55% 9%)`,
     "--accent-soft": `hsl(${hue} 42% 15%)`,
-    "--ring": `hsl(${hue} 62% 58%)`,
-    // Neutrals are tinted very slightly towards the hue, so a green or blue
-    // scheme reads as a deliberate theme rather than grey with a coloured link.
+    "--ring": `hsl(${hue} 62% ${l}%)`,
+    // Neutrals carry a trace of the hue, so a green or blue scheme reads as a
+    // deliberate theme rather than grey with a coloured link.
     "--bg": `hsl(${hue} 22% 7%)`,
     "--bg-tint": `hsl(${hue} 20% 11%)`,
     "--surface": `hsl(${hue} 20% 11%)`,
@@ -50,8 +58,8 @@ export default function HuePicker() {
   const wheelRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
-  // Restore the saved hue after mount. This runs client-side only, so there is
-  // a brief flash of the default palette for anyone with a colour saved.
+  // Restore the saved hue after mount. Client-side only, so there is a brief
+  // flash of the default palette for anyone who has a colour stored.
   useEffect(() => {
     let initial = DEFAULT_HUE;
     try {
@@ -84,28 +92,29 @@ export default function HuePicker() {
     const el = wheelRef.current;
     if (!el) return null;
     const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = clientX - cx;
-    const dy = clientY - cy;
-    const distance = Math.hypot(dx, dy);
+    const dx = clientX - (rect.left + rect.width / 2);
+    const dy = clientY - (rect.top + rect.height / 2);
     const outer = rect.width / 2;
 
-    // Ignore the middle, so dragging through the centre does not jump the hue.
-    if (distance < outer * 0.45 || distance > outer + 2) return null;
+    // The middle is left deliberately slack. Dragging across the centre would
+    // otherwise spin the hue wildly as the angle sweeps through the poles.
+    if (Math.hypot(dx, dy) < outer * 0.5 || Math.hypot(dx, dy) > outer + 8) {
+      return null;
+    }
 
-    // 0deg sits at the top of the wheel, matching the conic gradient.
-    const degrees = (Math.atan2(dy, dx) * 180) / Math.PI;
-    return degrees + 90;
+    // 0deg sits at the top, matching the conic gradient.
+    return (Math.atan2(dy, dx) * 180) / Math.PI + 90;
   }, []);
 
   const onPointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
-      const next = hueFromPointer(event.clientX, event.clientY);
-      if (next === null) return;
-      dragging.current = true;
+      // Capture on any press inside the wheel, not only on the ring. Requiring
+      // the press to start on the ring made the wheel feel like it ignored
+      // most clicks.
       event.currentTarget.setPointerCapture(event.pointerId);
-      commit(next);
+      dragging.current = true;
+      const next = hueFromPointer(event.clientX, event.clientY);
+      if (next !== null) commit(next);
     },
     [commit, hueFromPointer],
   );
@@ -119,81 +128,66 @@ export default function HuePicker() {
     [commit, hueFromPointer],
   );
 
-  const endDrag = useCallback(() => {
+  const endDrag = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = false;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
   }, []);
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const step = event.shiftKey ? 15 : 3;
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowUp":
-          event.preventDefault();
-          commit(hue + step);
-          break;
-        case "ArrowLeft":
-        case "ArrowDown":
-          event.preventDefault();
-          commit(hue - step);
-          break;
-        case "Home":
-          event.preventDefault();
-          commit(DEFAULT_HUE);
-          break;
+      const step = event.shiftKey ? 15 : 2;
+      if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+        event.preventDefault();
+        commit(hue + step);
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+        event.preventDefault();
+        commit(hue - step);
       }
     },
     [commit, hue],
   );
 
-  const isCustom = Math.round(hue) !== DEFAULT_HUE;
-
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        ref={wheelRef}
-        role="slider"
-        tabIndex={0}
-        aria-label="Accent colour"
-        aria-valuemin={0}
-        aria-valuemax={360}
-        aria-valuenow={Math.round(hue)}
-        aria-valuetext={`Hue ${Math.round(hue)} degrees`}
-        title="Drag to change the colour scheme"
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onKeyDown={onKeyDown}
-        className="relative h-16 w-16 cursor-pointer touch-none rounded-full select-none"
+    <div
+      ref={wheelRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Accent colour"
+      aria-valuemin={0}
+      aria-valuemax={360}
+      aria-valuenow={Math.round(hue)}
+      aria-valuetext={`Hue ${Math.round(hue)} degrees`}
+      title="Drag to change the colour scheme"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onLostPointerCapture={endDrag}
+      onKeyDown={onKeyDown}
+      className="relative h-[76px] w-[76px] shrink-0 cursor-pointer touch-none rounded-full select-none"
+      style={{
+        // Conic gradient masked into a ring, so it reads as a wheel with a
+        // hollow centre rather than a flat disc.
+        background:
+          "conic-gradient(from 0deg, hsl(0 62% 58%), hsl(60 62% 58%), hsl(120 62% 58%), hsl(180 62% 58%), hsl(240 62% 58%), hsl(300 62% 58%), hsl(360 62% 58%))",
+        maskImage: "radial-gradient(circle, transparent 0 52%, #000 52% 100%)",
+        WebkitMaskImage: "radial-gradient(circle, transparent 0 52%, #000 52% 100%)",
+      }}
+    >
+      {/* Marker sitting on the ring at the current hue. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 rounded-full ring-2 ring-[var(--ink)]"
         style={{
-          background:
-            "conic-gradient(from 0deg, hsl(0 62% 58%), hsl(60 62% 58%), hsl(120 62% 58%), hsl(180 62% 58%), hsl(240 62% 58%), hsl(300 62% 58%), hsl(360 62% 58%))",
+          width: 13,
+          height: 13,
+          background: `hsl(${hue} 62% ${lightness(hue)}%)`,
+          // Rotate about the centre, then push out to the ring radius.
+          transform: `translate(-50%, -50%) rotate(${hue}deg) translateY(-27px)`,
         }}
-      >
-        {/* Pointer on the ring at the current hue. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-[var(--ink)]"
-          style={{
-            transform: `translate(-50%, -50%) rotate(${hue}deg) translateY(-24px)`,
-            background: `hsl(${hue} 62% 58%)`,
-          }}
-        />
-      </div>
-
-      <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-muted">
-        <span>colour</span>
-        {isCustom && (
-          <button
-            type="button"
-            onClick={() => commit(DEFAULT_HUE)}
-            className="rounded px-1 underline underline-offset-2 transition-colors hover:text-accent"
-          >
-            reset
-          </button>
-        )}
-      </div>
+      />
     </div>
   );
 }

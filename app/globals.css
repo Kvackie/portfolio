@@ -1,6 +1,68 @@
 @import "tailwindcss";
 
 /*
+  Registering the palette variables as real colours is what lets them animate.
+  Without @property the browser treats them as untyped strings and snaps
+  straight to the new value, which is why dragging the hue wheel used to look
+  like a flicker rather than a change.
+*/
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8873a;
+}
+@property --accent-hover {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f09c59;
+}
+@property --accent-soft {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #382516;
+}
+@property --bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #17110c;
+}
+@property --bg-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1f1811;
+}
+@property --surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1f1811;
+}
+@property --surface-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2a2119;
+}
+@property --border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3b2e22;
+}
+@property --ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f3eae0;
+}
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a4917f;
+}
+@property --ring {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e8873a;
+}
+
+/*
   One warm palette, dark only.
 
   Every colour is a variable, so the palette is defined once here and never
@@ -24,6 +86,20 @@
   --ring: #e8873a;
 
   color-scheme: dark;
+
+  /* Applies when the hue wheel overwrites these inline on <html>. */
+  transition:
+    --bg 160ms ease,
+    --bg-tint 160ms ease,
+    --surface 160ms ease,
+    --surface-2 160ms ease,
+    --border 160ms ease,
+    --ink 160ms ease,
+    --muted 160ms ease,
+    --accent 160ms ease,
+    --accent-hover 160ms ease,
+    --accent-soft 160ms ease,
+    --ring 160ms ease;
 }
 
 @theme inline {

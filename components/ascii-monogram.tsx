@@ -31,7 +31,7 @@ export default function AsciiMonogram() {
 
       <HuePicker />
 
-      <div className="relative flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+      <div className="relative mt-4 flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
         <span>monogram</span>
         <span className="text-accent">● ● ●</span>
       </div>
