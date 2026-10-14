@@ -23,5 +23,4 @@ Just the site. Next.js, prerendered to static files and deployed to GitHub
 Pages by GitHub Actions on every push. No server, no database, nothing to
 install — it is just HTML and a little CSS.
 
-Layout inspired by [ad1tya.me](https://ad1tya.me/) and
-[matthiasholmberg.github.io/portfolio](https://matthiasholmberg.github.io/portfolio/).
+Layout inspired by [matthiasholmberg.github.io/portfolio](https://matthiasholmberg.github.io/portfolio/).
