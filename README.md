@@ -1,64 +1,27 @@
-# Valentin Wannesian — portfolio
+# Valentin Wannesian
 
-The site behind **[kvackie.github.io/portfolio](https://kvackie.github.io/portfolio/)**.
+Software engineer based in Sweden. I build browser games in my spare time, and
+this repo is the site that collects them.
 
-A single static page: a hero, the projects, a skills list, a short about and a
-contact block. Built with Next.js and Tailwind, prerendered to plain HTML, CSS
-and a little JavaScript, and published to GitHub Pages by GitHub Actions on
-every push to `main`.
+**Live site → [kvackie.github.io/portfolio](https://kvackie.github.io/portfolio/)**
 
-## Running it
+## Projects
 
-```bash
-npm install
-npm run dev      # http://localhost:3000/portfolio
-npm run build    # static export into out/
-npm run serve    # serve the export locally, at the right sub-path
-```
+| | | |
+|---|---|---|
+| **[Trial and Error](https://kvackie.github.io/Trial-and-error/)** | Five small mobile games in one repo — falling blocks, a potion match-three, a lantern-lit maze, a 3D hex town builder and a semi-idle dungeon defence. Each is built and published on its own. | [source](https://github.com/Kvackie/Trial-and-error) |
+| **[Eternal Alchemy](https://kvackie.github.io/eternal-alchemy/)** | A cozy fantasy potion shop for web and mobile. Plant, tend, harvest, brew, bottle, price, sell — and it keeps running while the app is closed. | [source](https://github.com/Kvackie/eternal-alchemy) |
+| **[Huntdle](https://kvackie.github.io/huntdle/)** | A LoLdle-style daily guessing game for Hunt: Showdown 1896, with six modes built on real data from the official wiki. | [source](https://github.com/Kvackie/huntdle) |
+| **[Dark Fantasy Settlement](https://kvackie.github.io/dark-fantasy-management/)** | A grim settlement builder for the browser. Raise a frontier town, staff it with heroes, push back the fog. | [source](https://github.com/Kvackie/dark-fantasy-management) |
 
-`npm run serve` exists because of a subtlety worth knowing: the site is served
-from `/portfolio`, not the domain root. Opening `out/index.html` directly, or
-serving `out/` at `/`, will 404 every asset.
+Two more are still in progress and private: a tile-based management sim and a
+collection tracker for Goddess of Victory: NIKKE.
 
-## How it is put together
+## This repo
 
-| Path | What it is |
-| --- | --- |
-| `app/page.tsx` | The whole page: hero, stats, projects, skills, about, contact |
-| `app/globals.css` | The warm palette, defined once as CSS variables |
-| `data/projects.ts` | All project copy, skills and links |
-| `lib/site.ts` | `BASE_PATH`, shared by `next.config.ts` and the components |
-| `components/` | ASCII monogram, project cards, header, icons |
+Just the site. Next.js, prerendered to static files and deployed to GitHub
+Pages by GitHub Actions on every push. No server, no database, nothing to
+install — it is just HTML and a little CSS.
 
-### Things that will bite you
-
-**Assets need the base path by hand.** `next/image` does not apply `basePath`
-to `src` in a static export, so anything referenced from `/public` has to go
-through `asset()` in `lib/site.ts`. It is easy to add an image with a bare
-`/img/foo.webp` that works in `npm run dev` and 404s once deployed.
-
-**No server, so no image optimisation.** `next/image` cannot run its optimiser
-without a server, so the components use a plain `<img>` against pre-compressed
-WebP. Do not reintroduce `next/image` without also turning off `output: "export"`.
-
-**Dark only, on purpose.** There is no theme toggle and no light palette. The
-game screenshots are all dark interfaces; a light site made them fight the
-background. If a light mode comes back, it belongs as a second block of
-variables in `globals.css`.
-
-**`npm install`, not `create-next-app`.** npm 12 refuses the `--allow-scripts`
-flag that `create-next-app` passes internally, so the scaffold command fails on
-this machine. Copying an existing scaffold in works fine.
-
-## Adding a project
-
-Add an entry to `PROJECTS` in `data/projects.ts`. The only field that really
-needs thought is `repo`: leave it off and the card renders unlinked, which is
-what the two private repositories do. Screenshots go in `public/img/` and are
-referenced as `/img/...` — the `asset()` call adds the base path for you.
-
-## Credits
-
-Layout inspired by [aditya.me](https://ad1tya.me/) and
+Layout inspired by [ad1tya.me](https://ad1tya.me/) and
 [matthiasholmberg.github.io/portfolio](https://matthiasholmberg.github.io/portfolio/).
-All the games linked from here are Valentin's own work.
