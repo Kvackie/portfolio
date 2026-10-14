@@ -132,9 +132,8 @@ export const STATS: { value: string; label: string }[] = [
 export const LINKS = {
   name: "Valentin Wannesian",
   monogram: "VW",
-  headline: "Software Engineer, side projects and other fun little ideas!",
+  headline: "Software Engineer, projects and small ideas brought to life!",
   location: "Sweden",
   github: "https://github.com/Kvackie",
   linkedin: "https://www.linkedin.com/in/valentin-w-9aab96141",
-  email: "valentin.wanne@gmail.com",
 } as const;

@@ -4,7 +4,6 @@ import {
   ArrowUpIcon,
   GitHubIcon,
   LinkedInIcon,
-  MailIcon,
 } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import Wordmark from "@/components/wordmark";
@@ -14,13 +13,11 @@ const NAV = [
   { href: "#work", label: "Projects" },
   { href: "#skills", label: "Skills" },
   { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
 ];
 
 const SOCIALS = [
   { href: LINKS.github, label: "GitHub", Icon: GitHubIcon },
   { href: LINKS.linkedin, label: "LinkedIn", Icon: LinkedInIcon },
-  { href: `mailto:${LINKS.email}`, label: "Email", Icon: MailIcon },
 ];
 
 function SectionHeading({
@@ -41,7 +38,7 @@ function SectionHeading({
       </p>
       <h2
         id={id}
-        className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl"
+        className="mt-2 scroll-mt-28 font-display text-3xl font-semibold tracking-tight sm:text-4xl"
       >
         {title}
       </h2>
@@ -121,29 +118,25 @@ export default function Home() {
           <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl flex-1">
               <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                {LINKS.name}
+                Me, myself and I
               </h1>
 
-              <div className="mt-4 flex flex-wrap items-center gap-2.5">
-                <span className="text-[15px] font-semibold text-ink sm:text-base">
-                  {LINKS.headline}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="hidden h-4 w-px bg-border sm:block"
-                />
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-2.5 py-1 font-mono text-[11px] text-muted">
-                  <span aria-hidden="true">◎</span>
-                  {LINKS.location}
-                </span>
-              </div>
+              <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-accent">
+                <span aria-hidden="true">◎</span>
+                {LINKS.location}
+              </p>
+
+              <p className="mt-5 font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+                {LINKS.headline}
+              </p>
 
               <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-muted sm:text-base">
-                Software engineer by day. The rest of it goes here. Every project
-                below is built from scratch, runs in a browser, and needs
-                nothing installed —{" "}
+                Six projects so far, mostly browser games — Phaser and Three.js
+                in TypeScript, each one built to be finished enough to actually
+                play, then published as static files so they run anywhere with
+                nothing to install.{" "}
                 <span className="text-ink">
-                  four of them you can play right now
+                  Four of them you can click straight into below
                 </span>
                 .
               </p>
@@ -206,11 +199,9 @@ export default function Home() {
         {/* -------------------------------------------------------------- */}
         {/* Work                                                            */}
         {/* -------------------------------------------------------------- */}
-        <section
-          id="work"
-          className="mx-auto max-w-5xl scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28"
-        >
+        <section className="mx-auto max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
           <SectionHeading
+            id="work"
             eyebrow="The work"
             title="Side projects"
             lede="Most of them are games, built to be finished enough to play. The pattern is the same in all of them: TypeScript, a real test suite, art and sound made in code wherever possible, and a build small enough to deploy as static files."
@@ -226,11 +217,9 @@ export default function Home() {
         {/* -------------------------------------------------------------- */}
         {/* Skills                                                          */}
         {/* -------------------------------------------------------------- */}
-        <section
-          id="skills"
-          className="mx-auto max-w-5xl scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28"
-        >
+        <section className="mx-auto max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
           <SectionHeading
+            id="skills"
             eyebrow="Toolbox"
             title="Skills"
             lede="Everything below is something I have actually shipped a project with."
@@ -260,101 +249,32 @@ export default function Home() {
         {/* -------------------------------------------------------------- */}
         {/* About                                                           */}
         {/* -------------------------------------------------------------- */}
-        <section
-          id="about"
-          className="mx-auto max-w-5xl scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28"
-        >
-          <SectionHeading eyebrow="About" title="Built for fun, finished enough to play" />
+        {/* -------------------------------------------------------------- */}
+        {/* About                                                           */}
+        {/* -------------------------------------------------------------- */}
+        <section className="mx-auto max-w-5xl px-5 py-20 sm:px-8 sm:py-28">
+          <SectionHeading id="about" eyebrow="About" title="How they're made" />
 
-          <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-            <div className="space-y-4 text-[15px] leading-relaxed text-muted">
-              <p>
-                I&apos;m a software engineer based in Sweden. The job is the
-                day-to-day; this is where everything else goes. Each project
-                started as a question I wanted to answer — how does a hex island
-                look in 3D, what actually makes a daily puzzle fun, can a
-                settlement sim feel grim and still be fair — and got carried
-                until it was finished enough to ship.
-              </p>
-              <p>
-                I like the unglamorous parts as much as the rest: writing the
-                tests for the simulation, documenting why a number is what it
-                is, and making sure a build you can hand someone actually runs.
-                Most of these READMEs are longer than the projects strictly need,
-                which I have been told is a character trait.
-              </p>
-              <p>
-                Nothing here needs an account or an install. Four of them you
-                can play in this tab; the other two are still private while they
-                grow.
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <h3 className="font-semibold text-ink">Deployed from GitHub</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                Every push runs the tests and publishes a static build to Pages.
               </p>
             </div>
-
-            <aside className="rounded-2xl border border-border bg-surface p-6">
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-                How they&apos;re made
-              </h3>
-              <ul className="mt-4 space-y-4 text-sm text-muted">
-                <li>
-                  <span className="block font-semibold text-ink">
-                    Deployed from GitHub
-                  </span>
-                  Every push runs the tests and publishes a static build to
-                  Pages.
-                </li>
-                <li>
-                  <span className="block font-semibold text-ink">
-                    Mobile first
-                  </span>
-                  Every game is designed for a phone held upright and played
-                  with thumbs, then checked on desktop.
-                </li>
-                <li>
-                  <span className="block font-semibold text-ink">
-                    Tested where it counts
-                  </span>
-                  Vitest suites cover the simulation and the balance numbers,
-                  because those are the parts that quietly break.
-                </li>
-              </ul>
-            </aside>
-          </div>
-        </section>
-
-        {/* -------------------------------------------------------------- */}
-        {/* Contact                                                         */}
-        {/* -------------------------------------------------------------- */}
-        <section
-          id="contact"
-          className="mx-auto max-w-5xl scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28"
-        >
-          <div className="overflow-hidden rounded-3xl border border-border bg-[linear-gradient(135deg,var(--accent-soft),var(--surface))] p-8 sm:p-12">
-            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
-              Contact
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-              Say hello
-            </h2>
-            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-              Always happy to talk about games, the odd build pipeline problem,
-              or what you&apos;re building.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {SOCIALS.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("mailto:") ? undefined : "_blank"}
-                  rel={
-                    href.startsWith("mailto:") ? undefined : "noopener noreferrer"
-                  }
-                  className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 font-mono text-xs font-semibold tracking-wide text-accent-ink transition-colors hover:bg-accent-hover"
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  {label}
-                </a>
-              ))}
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <h3 className="font-semibold text-ink">Mobile first</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                Every game is designed for a phone held upright and played with
+                thumbs, then checked on desktop.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <h3 className="font-semibold text-ink">Tested where it counts</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                Vitest suites cover the simulation and the balance numbers,
+                because those are the parts that quietly break.
+              </p>
             </div>
           </div>
         </section>

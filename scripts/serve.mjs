@@ -1,8 +1,9 @@
 // Serves the exported site locally *at the /portfolio sub-path*.
 //
 // Needed because the site is deployed under /portfolio, not the domain root.
-// Opening out/index.html directly, or serving out/ at /, 404s every asset
-// because Next emits paths like /portfolio/_next/... and /portfolio/img/....
+// Next emits paths like /portfolio/_next/... and /portfolio/img/..., so serving
+// out/ directly at / 404s every asset. This mounts out/ at the sub-path instead,
+// so what you see locally is what Pages will serve.
 
 import http from "node:http";
 import fs from "node:fs";
@@ -11,6 +12,10 @@ import { fileURLToPath } from "node:url";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "out");
 const PORT = Number(process.env.PORT || 4321);
+
+// Must match BASE_PATH in lib/site.ts. Duplicated because this file is plain
+// ESM and cannot import the TypeScript module.
+const BASE_PATH = "/portfolio";
 
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -32,8 +37,25 @@ if (!fs.existsSync(OUT)) {
 
 http
   .createServer((req, res) => {
-    const url = decodeURIComponent((req.url ?? "/").split("?")[0]);
-    let file = path.join(OUT, url);
+    let pathname = decodeURIComponent((req.url ?? "/").split("?")[0]);
+
+    // Send bare / to the real entry point.
+    if (pathname === "/" || pathname === "") {
+      res.writeHead(302, { location: `${BASE_PATH}/` }).end();
+      return;
+    }
+
+    // Strip the base path so the request maps onto out/.
+    if (pathname === BASE_PATH) {
+      pathname = "/";
+    } else if (pathname.startsWith(`${BASE_PATH}/`)) {
+      pathname = pathname.slice(BASE_PATH.length);
+    } else {
+      res.writeHead(404).end(`not found: ${pathname} (site lives at ${BASE_PATH}/)`);
+      return;
+    }
+
+    let file = path.join(OUT, pathname);
 
     // Keep requests inside out/.
     if (!path.resolve(file).startsWith(path.resolve(OUT))) {
@@ -49,7 +71,7 @@ http
       file = `${file}.html`;
     }
     if (!fs.existsSync(file)) {
-      res.writeHead(404).end(`not found: ${url}`);
+      res.writeHead(404).end(`not found: ${pathname}`);
       return;
     }
 
@@ -60,6 +82,6 @@ http
     fs.createReadStream(file).pipe(res);
   })
   .listen(PORT, () => {
-    console.log(`Serving ${OUT}`);
-    console.log(`  ->  http://localhost:${PORT}/portfolio/`);
+    console.log(`Serving ${OUT} at ${BASE_PATH}/`);
+    console.log(`  ->  http://localhost:${PORT}${BASE_PATH}/`);
   });

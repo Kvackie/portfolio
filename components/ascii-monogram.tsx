@@ -4,18 +4,18 @@
  * Block letters rather than a rendered portrait: it needs no photo, stays
  * crisp at any size, and echoes the terminal panel the games are built with.
  *
- * Laid out on a strict 6-row grid: the V is 7 columns wide, the W is 9, and the
- * W's middle peak reaches row 3 so it reads as a W rather than as two Vs.
- * Every W row is mirror-symmetric about its centre column -- an off-by-one
- * there is exactly what makes an ASCII W look twisted.
+ * Laid out on a strict 6-row grid with both letters exactly 7 columns wide,
+ * so the V and the W share a stroke weight instead of the W reading as a
+ * heavier blob. Every row is mirror-symmetric about its centre column -- an
+ * off-by-one there is what makes an ASCII W look twisted.
  */
 const VW = [
-  "█     █ █       █",
-  "█     █ █       █",
-  "█     █ █   █   █",
-  " █   █  █  █ █  █",
-  "  █ █   █ █   █ █",
-  "   █    ██     ██",
+  "█     █ █     █",
+  "█     █ █  █  █",
+  "█     █ █  █  █",
+  "█     █ █  █  █",
+  " █   █  █ █ █ █",
+  "   █    ██   ██",
 ];
 
 export default function AsciiMonogram() {
