@@ -16,8 +16,9 @@ is the site that collects them.
 
 ## This repo
 
-Just the site. Next.js, prerendered to static files and deployed to GitHub
-Pages by GitHub Actions on every push. No server, no database, nothing to
-install — it is just HTML and a little CSS.
+Just the site. Next.js, prerendered to static files and published to GitHub
+Pages by GitHub Actions. No server, no database, nothing to install — it is
+just HTML and a little CSS. The deploy only runs when I trigger it from the
+Actions tab, so copy tweaks don't push a needless build.
 
 Layout inspired by [matthiasholmberg.github.io/portfolio](https://matthiasholmberg.github.io/portfolio/).

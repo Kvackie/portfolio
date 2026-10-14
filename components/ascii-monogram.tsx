@@ -1,3 +1,5 @@
+import HuePicker from "./hue-picker";
+
 /**
  * The hero's ASCII monogram.
  *
@@ -26,6 +28,8 @@ export default function AsciiMonogram() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-soft),transparent_70%)] opacity-70"
       />
+
+      <HuePicker />
 
       <div className="relative flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
         <span>monogram</span>

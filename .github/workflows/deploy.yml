@@ -1,13 +1,15 @@
 # Builds the static export and publishes it to GitHub Pages.
 #
+# Manual dispatch only, on purpose: most pushes here are copy tweaks or README
+# edits, and there is no reason to burn a deploy on those. Run it from the
+# Actions tab when a change is worth publishing.
+#
 # The site is a Next.js static export (next build -> out/), so this only has to
 # install, build and upload. Pages serves `out/` from the /portfolio sub-path.
 
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
