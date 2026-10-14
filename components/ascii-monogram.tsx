@@ -38,11 +38,6 @@ export default function AsciiMonogram() {
       >
         {VW.join("\n")}
       </pre>
-
-      <div className="relative mt-4 flex items-center justify-between border-t border-border pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-        <span>est. 2014</span>
-        <span>Sweden</span>
-      </div>
     </div>
   );
 }

@@ -122,11 +122,7 @@ export default function Home() {
         >
           <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl flex-1">
-              <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
-                Side projects
-              </p>
-
-              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                 {LINKS.name}
               </h1>
 

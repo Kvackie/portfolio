@@ -8,8 +8,8 @@ export default function Wordmark() {
       href="#top"
       className="flex shrink-0 items-center gap-1.5 font-mono text-sm font-bold tracking-tight"
     >
-      <span>valentin</span>
-      <span className="text-accent">.wannesian</span>
+      <span>Valentin</span>
+      <span className="text-accent">Wannesian</span>
     </a>
   );
 }
