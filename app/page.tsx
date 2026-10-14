@@ -117,18 +117,14 @@ export default function Home() {
         >
           <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl flex-1">
-              <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Me, myself and I
-              </h1>
-
-              <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-accent">
+              <p className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-accent">
                 <span aria-hidden="true">◎</span>
                 {LINKS.location}
               </p>
 
-              <p className="mt-5 font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+              <h1 className="mt-4 max-w-2xl font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
                 {LINKS.headline}
-              </p>
+              </h1>
 
               <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-muted sm:text-base">
                 Six projects so far, mostly browser games — Phaser and Three.js
