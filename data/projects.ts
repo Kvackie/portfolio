@@ -12,16 +12,19 @@ export type Project = {
   tagline: string;
   /** One or two sentences on what it actually is. */
   description: string;
-  /** Path under /public. Omit for projects with no public demo. */
+  /** Path under /public. Omit for projects with no screenshot yet. */
   image?: string;
   imageAlt?: string;
-  /** GitHub URL. Omit for private repositories -- those render unlinked. */
+  /**
+   * GitHub URL. Private repositories are linked too; they only open for
+   * people with access, so mark them with `status: "private"`.
+   */
   repo?: string;
   /** Live URL, when there is something playable. */
   play?: string;
   /** Short labels for the tech pills. */
   tech: string[];
-  /** Rendered as a badge; also suppresses the link. */
+  /** Rendered as a badge. */
   status?: "private" | "in-progress";
 };
 
@@ -36,8 +39,8 @@ export const PROJECTS: Project[] = [
     imageAlt:
       "The Trial and Error hub, listing Block Drop, Hex Hold, Lantern Maze, Potion Match and Throne of Souls with an icon for each.",
     repo: "https://github.com/Kvackie/Trial-and-error",
-    play: "https://kvackie.github.io/Trial-and-error/",
     tech: ["TypeScript", "Phaser", "Three.js", "Capacitor", "Vite"],
+    status: "private",
   },
   {
     slug: "eternal-alchemy",
@@ -49,8 +52,8 @@ export const PROJECTS: Project[] = [
     imageAlt:
       "The Eternal Alchemy grounds screen, with five seeds and a row of empty plots waiting to be planted.",
     repo: "https://github.com/Kvackie/eternal-alchemy",
-    play: "https://kvackie.github.io/eternal-alchemy/",
     tech: ["TypeScript", "Phaser", "Capacitor", "Vite"],
+    status: "private",
   },
   {
     slug: "huntdle",
@@ -75,8 +78,28 @@ export const PROJECTS: Project[] = [
     imageAlt:
       "The world map in Dark Fantasy Settlement, showing named biomes such as The Hollow March and Crystal Cavern among the fog.",
     repo: "https://github.com/Kvackie/dark-fantasy-management",
-    play: "https://kvackie.github.io/dark-fantasy-management/",
     tech: ["TypeScript", "Phaser", "Vite", "Vitest"],
+    status: "private",
+  },
+  {
+    slug: "space-game",
+    title: "Space Game",
+    tagline: "Mine, build ships and send fleets out on expeditions.",
+    description:
+      "A single-player space fleet management game in the browser: mine and refine ore, craft, build ships, recruit captains and send fleets on expeditions and into battle. The 3D view is Babylon.js with Blender-built models, the menus are HTML and CSS on top, and Vitest covers the clock, crafting, fleets, battles and saves. No title yet -- the name is still open.",
+    repo: "https://github.com/Kvackie/space-game",
+    tech: ["TypeScript", "Babylon.js", "Blender", "Vite", "Vitest"],
+    status: "private",
+  },
+  {
+    slug: "guild-desk",
+    title: "The Guild Desk",
+    tagline: "Run the front desk of an adventurers' guild.",
+    description:
+      "A deduction game in three shifts. Mornings, read a client's quest, work out the monster from the bestiary, rate its danger and pack the right supplies. Days, check returning claims against loot, licence and deadline. Nights, cook monster loot into dishes that heal your injured adventurers. Quests are generated from a seed so every one has exactly one answer, and the rules are unit-tested.",
+    repo: "https://github.com/Kvackie/deduction-game",
+    tech: ["TypeScript", "Phaser", "Vite", "Vitest"],
+    status: "private",
   },
   {
     slug: "management-game",
@@ -84,7 +107,31 @@ export const PROJECTS: Project[] = [
     tagline: "A tile-based management sim, still in design.",
     description:
       "A data-driven management game: resources, buildings whose levels above the first are derived by formula rather than hand-written, crafting recipes, and combat with armor and damage maths. The design document and the content database are the source of truth. The playable build is early, so this one stays private for now.",
+    repo: "https://github.com/Kvackie/management-game",
     tech: ["TypeScript", "Phaser", "Vite"],
+    status: "private",
+  },
+  {
+    slug: "ytdlp-gui",
+    title: "yt-dlp GUI",
+    tagline: "Paste a link, get the video. One file, nothing to install.",
+    description:
+      "A desktop app for Windows and Linux that downloads video and audio with yt-dlp. On first start it fetches yt-dlp, FFmpeg and Deno, checks them against their published checksums and keeps them up to date. A queue that survives restarts, playlists, subtitles, SponsorBlock cutting and an exact-format picker, all shipped as a single executable.",
+    image: "/img/ytdlp-gui.webp",
+    imageAlt:
+      "The yt-dlp GUI main window: a link box, download options, and a queue with downloads in progress, merging, done and failed.",
+    repo: "https://github.com/Kvackie/ytdlp-gui",
+    tech: ["Python", "PySide6", "PyInstaller"],
+    status: "private",
+  },
+  {
+    slug: "media-renamer",
+    title: "Media Renamer",
+    tagline: "Rename movie, TV and anime files from online databases.",
+    description:
+      "Drop files in, match them against TMDB, TVmaze, AniDB or OpenSubtitles, preview the new names and rename, move or copy them -- with undo history. Naming is Jinja2 templates with live preview, the layout is dockable panels, and API keys live in the system password store. A single file for Windows and Linux.",
+    repo: "https://github.com/Kvackie/media-renamer",
+    tech: ["Python", "PySide6", "Jinja2", "PyInstaller"],
     status: "private",
   },
   {
@@ -93,7 +140,18 @@ export const PROJECTS: Project[] = [
     tagline: "Track which of the 185 characters you own.",
     description:
       "A small self-contained tracker for Goddess of Victory: NIKKE, with owned and completion counts up top, search, and filters for rarity and element. Private for now -- it is a personal tool rather than something finished.",
+    repo: "https://github.com/Kvackie/nikke-tracker-private",
     tech: ["HTML", "CSS", "JavaScript"],
+    status: "private",
+  },
+  {
+    slug: "boombox-controller",
+    title: "Boombox Controller",
+    tagline: "Play any YouTube track on the boombox in Lethal Company.",
+    description:
+      "My rework of Koder-Tech's Boombox Controller mod. Type /bplay and a YouTube link in chat, and the mod downloads the audio with yt-dlp and FFmpeg and loads it onto the in-game boombox. I cut the original down to that core and rewrote the download and playback path.",
+    repo: "https://github.com/Kvackie/Boombox-Controller",
+    tech: ["C#", "BepInEx", "Harmony", "Unity"],
     status: "private",
   },
 ];
@@ -102,29 +160,37 @@ export const PROJECTS: Project[] = [
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
   {
     label: "Languages",
-    items: ["TypeScript", "JavaScript", "HTML", "CSS"],
+    items: ["TypeScript", "JavaScript", "Python", "C#", "HTML", "CSS"],
   },
   {
     label: "Games",
-    items: ["Phaser 3/4", "Three.js", "Canvas 2D", "Pixel art"],
+    items: ["Phaser 3/4", "Three.js", "Babylon.js", "Canvas 2D", "Pixel art"],
   },
   {
     label: "Frameworks",
-    items: ["React", "Next.js", "Vite", "Capacitor"],
+    items: ["React", "Next.js", "Vite", "Capacitor", "PySide6 (Qt)"],
   },
   {
     label: "Tooling",
-    items: ["Vitest", "TDD", "Prettier", "Biome", "GitHub Actions"],
+    items: [
+      "Vitest",
+      "TDD",
+      "Prettier",
+      "Biome",
+      "GitHub Actions",
+      "PyInstaller",
+      "Blender",
+    ],
   },
   {
     label: "Platforms",
-    items: ["GitHub Pages", "Android", "Web"],
+    items: ["GitHub Pages", "Android", "Web", "Windows", "Linux"],
   },
 ];
 
 export const STATS: { value: string; label: string }[] = [
-  { value: "6", label: "Side projects" },
-  { value: "4", label: "Playable right now" },
+  { value: "11", label: "Side projects" },
+  { value: "7", label: "Games" },
   { value: "6", label: "Android builds" },
   { value: "12", label: "Years on GitHub" },
 ];

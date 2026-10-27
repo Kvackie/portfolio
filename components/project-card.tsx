@@ -26,7 +26,7 @@ function StatusBadge({ status }: { status: NonNullable<Project["status"]> }) {
       ) : (
         <CoffeeIcon className="h-3 w-3" />
       )}
-      {isPrivate ? "Private — not linked" : "In progress"}
+      {isPrivate ? "Private repo" : "In progress"}
     </span>
   );
 }
@@ -62,7 +62,10 @@ function ProjectImage({ project }: { project: Project }) {
   );
 }
 
-/** One card in the grid. Links only when there is somewhere to go. */
+/**
+ * One card in the grid. Links to the repo whenever there is one -- private
+ * repos included, which only open for people with access.
+ */
 export function ProjectCard({ project }: { project: Project }) {
   const isPrivate = Boolean(project.status);
 
@@ -80,7 +83,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <h3 className="font-display text-xl font-semibold tracking-tight">
             {project.title}
           </h3>
-          {!isPrivate && (
+          {project.repo && (
             <ArrowUpRightIcon className="mt-1 h-4 w-4 shrink-0 text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
           )}
         </div>
@@ -118,7 +121,9 @@ export function ProjectCard({ project }: { project: Project }) {
       rel="noopener noreferrer"
       className={`${shell} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring`}
     >
-      <span className="sr-only">{project.title} — view on GitHub</span>
+      <span className="sr-only">
+        {project.title} — view on GitHub{isPrivate && " (private repository)"}
+      </span>
       {body}
     </a>
   );

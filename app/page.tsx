@@ -127,12 +127,12 @@ export default function Home() {
               </h1>
 
               <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-muted sm:text-base">
-                Six projects so far, mostly browser games — Phaser and Three.js
-                in TypeScript, each one built to be finished enough to actually
-                play, then published as static files so they run anywhere with
-                nothing to install.{" "}
+                Eleven projects so far, mostly browser games — Phaser,
+                Three.js and Babylon.js in TypeScript — plus two desktop tools
+                in Python and a game mod in C#.{" "}
                 <span className="text-ink">
-                  Four of them you can click straight into below
+                  Most repos are private for now; Huntdle you can play
+                  straight away
                 </span>
                 .
               </p>
@@ -200,7 +200,7 @@ export default function Home() {
             id="work"
             eyebrow="The work"
             title="Side projects"
-            lede="Most of them are games, built to be finished enough to play. The pattern is the same in all of them: TypeScript, a real test suite, art and sound made in code wherever possible, and a build small enough to deploy as static files."
+            lede="Most of them are games, built to be finished enough to play. The games share a pattern: TypeScript, a real test suite, art and sound made in code wherever possible, and a build small enough to deploy as static files. The desktop tools ship as a single file for Windows and Linux."
           />
 
           <div className="grid gap-6 sm:grid-cols-2">
