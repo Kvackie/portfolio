@@ -122,7 +122,6 @@ export const PROJECTS: Project[] = [
       "The yt-dlp GUI main window: a link box, download options, and a queue with downloads in progress, merging, done and failed.",
     repo: "https://github.com/Kvackie/ytdlp-gui",
     tech: ["Python", "PySide6", "PyInstaller"],
-    status: "private",
   },
   {
     slug: "media-renamer",
